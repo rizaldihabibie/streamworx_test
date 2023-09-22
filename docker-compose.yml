@@ -1,5 +1,12 @@
 version: "3"
 services:
+      
+  registration-service:
+    image: registration-server:latest
+    ports:
+      - "8761:8761"
+    network_mode: "host"
+    
   db:
     image: mysql:8.0
     cap_add:
@@ -48,8 +55,10 @@ services:
       - "8081:8081"
     network_mode: "host"
     depends_on:
+      - registration-service
       - post-service
-      - cache
+      - cache 
+    
   cache:
     image: redis:6.2-alpine
     restart: always
